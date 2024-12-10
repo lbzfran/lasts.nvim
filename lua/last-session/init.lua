@@ -13,8 +13,8 @@ M.load = function(path)
     M.var = csv.read(path)
 end
 
-M.setup = function(path)
-    path = path or M.default_savefile
+M.setup = function()
+    local path = M.savefile or M.default_savefile
     if not csv.exists(path) then
         os.execute("touch " .. path)
     end
