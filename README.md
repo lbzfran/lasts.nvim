@@ -19,9 +19,9 @@ key2,value2
 Using lazy.nvim:
 ```lua
 return {
-  "lbzfran/last-session.nvim",
+  "lbzfran/lasts.nvim",
   config = function()
-    local lasts = require('last-session')
+    local lasts = require('lasts')
 
     -- change path of saved variables.
     -- defaults to directory of plugin.
