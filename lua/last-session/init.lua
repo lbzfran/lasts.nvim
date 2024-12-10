@@ -5,20 +5,20 @@ M.default_savefile = debug.getinfo(1, "S").source:sub(2):match("^(.*[/\\])") .. 
 
 local csv = require("last-session.simplecsv")
 
-M.save = function(path)
-    csv.write(path, M.var)
+M.save = function()
+    csv.write(M.savefile, M.var)
 end
 
-M.load = function(path)
-    M.var = csv.read(path)
+M.load = function()
+    M.var = csv.read(M.savefile)
 end
 
 M.setup = function()
-    local path = M.savefile or M.default_savefile
-    if not csv.exists(path) then
-        os.execute("touch " .. path)
+    M.savefile = M.savefile or M.default_savefile
+    if not csv.exists(M.savefile) then
+        os.execute("touch " .. M.savefile)
     end
-    M.load(path)
+    M.load()
 end
 
 return M
