@@ -1,24 +1,24 @@
 local M = {}
+
 M.var = {}
+M.default_savefile = debug.getinfo(1, "S").source:sub(2):match("^(.*[/\\])") .. "savefile.csv"
 
-M.path_csv = debug.getinfo(1, "S").source:sub(2):match("^(.*[/\\])") .. "savefile.csv"
+local csv = require("last-session.simplecsv")
 
-local csv = require("simplecsv")
-
-if not csv.exists(M.path_csv) then
-    os.execute("touch " .. M.path_csv)
+M.save = function(path)
+    csv.write(path, M.var)
 end
 
-M.save = function()
-    csv.write(M.path_csv, M.var)
+M.load = function(path)
+    M.var = csv.read(path)
 end
 
-M.load = function()
-    M.var = csv.read(M.path_csv)
-end
-
-M.setup = function()
-    M.load()
+M.setup = function(path)
+    path = path or M.default_savefile
+    if not csv.exists(path) then
+        os.execute("touch " .. path)
+    end
+    M.load(path)
 end
 
 return M
