@@ -1,7 +1,9 @@
 local M = {}
 
 M.var = {}
-M.default_savefile = debug.getinfo(1, "S").source:sub(2):match("^(.*[/\\])") .. "savefile.csv"
+
+local data_path = vim.fn.stdpath("data")
+M.default_savefile = string.format("%s/%s.csv", data_path, "lasts_savefile")
 
 local csv = require("lasts.simplecsv")
 
